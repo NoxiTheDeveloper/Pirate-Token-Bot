@@ -23,7 +23,7 @@ TAP_HOLD = (0.05, 0.11)
 IDLE_AFTER = 1.0
 HOLD = (0.8, 3.0)
 COMBOS = [("w",), ("w",), ("w",), ("w", "a"), ("w", "d"), ("a",), ("d",), ("s",)]
-JUMP = (6, 10)
+JUMP = (6, 12)
 LOOK = (2.5, 6)
 USER_WAIT = 20
 
