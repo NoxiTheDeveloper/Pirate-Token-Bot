@@ -399,6 +399,8 @@ def run():
     seen_at = time.time()
     f9p = False
     wasuser = False
+    ready_done = False
+    ready_at = 0.0
 
     try:
         while True:
@@ -418,6 +420,9 @@ def run():
             if seen:
                 seen_at = now
 
+            if ready_done and now - ready_at > 300:
+                ready_done = False
+
             user = now - last_real < USER_WAIT
             if user != wasuser:
                 print("you're on, bot idle paused" if user else "no input for a bit, idle back on")
@@ -429,6 +434,7 @@ def run():
 
             if "placed" in seen and not armed and now >= rest:
                 print("YOU PLACED -> leaving")
+                ready_done = False
                 arm_end = now + ARM_FOR
                 tries = 1
                 wait(REACT)
@@ -441,6 +447,8 @@ def run():
             for n in ("ready", "lobby", "menu"):
                 if n not in seen:
                     continue
+                if n == "ready" and ready_done:
+                    continue
                 if not (armed or (n in ANYTIME and not user)):
                     continue
                 if now - lastclick.get(n, 0) < CLICK_GAP:
@@ -450,6 +458,9 @@ def run():
                 wait(REACT)
                 click(n, *seen[n])
                 lastclick[n] = time.time()
+                if n == "ready":
+                    ready_done = True
+                    ready_at = time.time()
                 did = True
                 if n == "ready" and armed:
                     print("  done\n")
