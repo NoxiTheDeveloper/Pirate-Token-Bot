@@ -45,7 +45,7 @@ pip install -r requirements.txt
 **4. Run the bot**
 
 ```bash
-python "Pirate Token Bot.py"
+python "PirateTokenBot.py"
 ```
 
 That's it! The bot will start up and check that all required image templates are available.
